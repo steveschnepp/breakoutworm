@@ -17,12 +17,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-void draw_circle(float x, float y, float r) {
-    glBegin(GL_TRIANGLE_FAN);
-    glVertex2f(x, y);
+void draw_circle(float x, float y, float r, float width) {
+    float r0 = r;
+    float r1 = r + width;
+
+    glBegin(GL_TRIANGLE_STRIP);
     for (int i = 0; i <= CIRCLE_POINTS; i++) {
         float a = 2.0f * PI * i / CIRCLE_POINTS;
-        glVertex2f(x + cosf(a) * r, y + sinf(a) * r);
+        float cx = cosf(a);
+        float cy = sinf(a);
+
+        glVertex2f(x + cx * r0, y + cy * r0);
+        glVertex2f(x + cx * r1, y + cy * r1);
     }
     glEnd();
 }
@@ -76,7 +82,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrev, LPSTR lpCmd, int nShow) {
         glClear(GL_COLOR_BUFFER_BIT);
 
         glLoadIdentity();
-        draw_circle(pos_x, 0.0f, 0.1f);
+        draw_circle(pos_x, 0.0f, 0.1f, 0.02f);
 
         SwapBuffers(hDC);
         Sleep(16);
