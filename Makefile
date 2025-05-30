@@ -22,7 +22,8 @@ $(COMMON_DIR)/%.o: $(COMMON_DIR)/%.c
 %: %.c $(COMMON_SRC)
 	$(CC) $< $(LDLIBS) $(CFLAGS) $(LDFLAGS) -o $@  $(COMMON_SRC)
 
-breakoutworm: LDFLAGS += -ld3d9 -ld3dx9 -lwinmm -nostdlib -lkernel32 -luser32 -lucrtbase
+breakoutworm: LDFLAGS += -ld3d9 -ld3dx9 -lwinmm
+breakoutworm: LDFLAGS += -nostdlib -lkernel32 -luser32 -lucrtbase
 breakoutworm: CFLAGS +=  \
 	-flto \
 	-fno-asynchronous-unwind-tables \
