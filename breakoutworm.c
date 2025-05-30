@@ -988,6 +988,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     return 0;
 }
 
+__attribute__((weak))
 void __cdecl mainCRTStartup(void) {
     HINSTANCE hInstance = GetModuleHandle(NULL);
     LPSTR cmdLine = GetCommandLineA();
