@@ -170,7 +170,7 @@ void line(IDirect3DDevice9 *device, float x1, float y1, float x2, float y2, D3DC
     device->lpVtbl->DrawPrimitiveUP(device, D3DPT_LINELIST, 1, vertices, sizeof(struct Vertex_XYZRHW_C));
 }
 
-#define CIRCLE_SEGMENTS 16
+#define CIRCLE_SEGMENTS 32
 
 static
 void circfill(IDirect3DDevice9 *device, float x, float y, float r, D3DCOLOR color) {
