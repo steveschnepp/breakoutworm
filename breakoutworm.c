@@ -246,11 +246,6 @@ void circ(IDirect3DDevice9 *device, float x, float y, float r, float width, D3DC
 }
 
 void rect_gradient(IDirect3DDevice9 *device, float x1, float y1, float x2, float y2, D3DCOLOR color_top, D3DCOLOR color_bottom) {
-    struct Vertex {
-        float x, y, z, rhw;
-        D3DCOLOR color;
-    };
-
     struct Vertex_XYZRHW_C vertices[4] = {
         { x1, y1, 0.0f, 1.0f, color_top },  // top-left
         { x2, y1, 0.0f, 1.0f, color_top },  // top-right
@@ -263,6 +258,18 @@ void rect_gradient(IDirect3DDevice9 *device, float x1, float y1, float x2, float
 
 void rect(IDirect3DDevice9 *device, float x1, float y1, float x2, float y2, D3DCOLOR color) {
     rect_gradient(device, x1, y1, x2, y2, color, color);
+}
+
+// Particles
+void points(IDirect3DDevice9 *device, float x[], float y[], int nb_points, D3DCOLOR color) {
+    struct Vertex_XYZRHW_C vertices[1024];
+
+    for (int i = 0; i < nb_points; i ++) {
+        struct Vertex_XYZRHW_C v = { x[i], y[i], 0.0f, 1.0f, color };
+        vertices[i] = v;
+    }
+
+    device->lpVtbl->DrawPrimitiveUP(device, D3DPT_POINTLIST, nb_points, vertices, sizeof(struct Vertex_XYZRHW_C));
 }
 
 #pragma endregion
@@ -730,6 +737,21 @@ int should_render(float target_hz) {
     }
 
     return 0;
+}
+
+int nb_particles = 0;
+struct mover particles[4096];
+void update_particles(void) {
+    for (int i = 0; i < nb_particles; i ++) {
+        struct mover *p = particles + i;
+
+        p->c.r *= 0.9;
+            
+        // gravity
+        p->delta.y += 0.05f;
+        p->c.p.x += p->delta.x;
+        p->c.p.y += p->delta.y;
+    }
 }
 
 

@@ -1,7 +1,6 @@
-CFLAGS += -Wall -Oz -ffunction-sections -fdata-sections # -g
+CFLAGS += -Wall -Oz -ffunction-sections -fdata-sections -g
+CFLAGS += -mtune=native -march=native
 LDFLAGS = -s -Wl,--gc-sections
-LDFLAGS +=
-LDLIBS = -mconsole
 
 CFLAGS += -DNDEBUG
 
@@ -23,7 +22,9 @@ $(COMMON_DIR)/%.o: $(COMMON_DIR)/%.c
 	$(CC) $< $(LDLIBS) $(CFLAGS) $(LDFLAGS) -o $@  $(COMMON_SRC)
 
 breakoutworm: LDFLAGS += -ld3d9 -ld3dx9 -lwinmm
-breakoutworm: LDFLAGS += -nostdlib -lkernel32 -luser32 -lucrtbase
+breakoutworm: LDLIBS += -mconsole
+
+#breakoutworm: LDFLAGS += -nostdlib -lkernel32 -luser32 -lucrtbase
 breakoutworm: CFLAGS +=  \
 	-flto \
 	-fno-asynchronous-unwind-tables \
@@ -45,3 +46,7 @@ breakoutworm: CFLAGS +=  \
 
 clean:
 	rm -f $(TARGETS) $(COMMON_OBJ)
+
+circle_linux: LDFLAGS += -lX11 -lGL -lm -flto
+
+circle_win32: LDFLAGS += -lgdi32 -lopengl32
