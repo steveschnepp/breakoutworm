@@ -1,6 +1,6 @@
 # Breakout Worm
 
-My submission for the 4MB Jam 2025.
+My submission for the [4MB Jam 2025](https://itch.io/jam/4mb-jam-2025).
 
 Another speedy submission : now with about 8 hours in total.
 
