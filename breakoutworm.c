@@ -963,7 +963,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     wc.lpfnWndProc = WindowProc;
     RegisterClass(&wc);
 
-    HWND hWnd = CreateWindow("WindowClass", "Worm Pong DX9", WS_OVERLAPPEDWINDOW,
+    HWND hWnd = CreateWindow("WindowClass", "Breakout Worm DX9", WS_OVERLAPPEDWINDOW,
                              CW_USEDEFAULT, CW_USEDEFAULT, SCREEN_WIDTH, SCREEN_HEIGHT, NULL, NULL, hInstance, NULL);
     ShowWindow(hWnd, nCmdShow);
 
